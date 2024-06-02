@@ -39,10 +39,11 @@ display_location() {
     location_info=$(curl -s http://ip-api.com/json/"$public_ip")
     country=$(echo "$location_info" | grep -Po '"country":.*?[^\\]",' | awk -F':' '{print $2}' | sed 's/","//g' | sed 's/"//g')
     region=$(echo "$location_info" | grep -Po '"regionName":.*?[^\\]",' | awk -F':' '{print $2}' | sed 's/","//g' | sed 's/"//g')
-    postal_code=$(echo "$location_info" | grep -Po '"zip":.*?[^\\]",' | awk -F':' '{print $2}' | sed 's/","//g' | sed 's/"//g')
+    ISP=$(echo "$location_info" | grep -Po '"isp":.*?[^\\]",' | awk -F':' '{print $2}' | sed 's/","//g' | sed 's/"//g')
     lat=$(echo "$location_info" | grep -Po '"lat":.*?[^\\],' | awk -F':' '{print $2}' | sed 's/,//g')
     lon=$(echo "$location_info" | grep -Po '"lon":.*?[^\\],' | awk -F':' '{print $2}' | sed 's/,//g')
-    echo -e "Location Information:\nCountry: $country\nRegion: $region\nPostal Code: $postal_code\nLatitude: $lat\nLongitude: $lon"
+    echo -e "Location Information:\nCountry: $country\nRegion: $region\nPostal Code: $postal_code\nLatitude: $lat\nLongitude: $lon\nISP: $ISP"
+
 }
 
 main() {
